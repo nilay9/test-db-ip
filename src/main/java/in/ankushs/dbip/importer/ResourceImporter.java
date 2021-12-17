@@ -91,10 +91,10 @@ public final class ResourceImporter {
 						.Builder()
 						.withStartInetAddress(InetAddresses.forString(array[0]))
 						.withEndInetAddress(InetAddresses.forString(array[1]))
-						.withCountryCode(array[2])
-						.withCountry(CountryResolver.resolveToFullName(array[2]))
-						.withProvince(interner.intern(array[3]))
-						.withCity(interner.intern(array[4]))
+						.withCountryCode(array[3])
+						.withCountry(CountryResolver.resolveToFullName(array[3]))
+						.withProvince(interner.intern(array[4]))
+						.withCity(interner.intern(array[5]))
 						.withIsp(isp)
 						.build();
 
