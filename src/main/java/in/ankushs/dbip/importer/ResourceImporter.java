@@ -99,7 +99,7 @@ public final class ResourceImporter {
 						.withContinentName(interner.intern(array[2]))
 						.withStateProvCode(interner.intern(array[7]))
 						.withAsNumber(interner.intern(array[15]))
-						.withLinkType(interner.intern(array[16]))
+						.withLinkType(array[16])
 						.build();
 
 				if(Objects.isNull(jedisPool)) {
