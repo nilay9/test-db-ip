@@ -81,7 +81,7 @@ public final class ResourceImporter {
 				array = csvParser.parseRecord(line);
 				String isp = "";
 				try{
-					 isp = interner.intern(array[12]);
+					 isp = interner.intern(array[14]);
 				}
 				catch(Exception ex){
 
@@ -96,6 +96,10 @@ public final class ResourceImporter {
 						.withProvince(interner.intern(array[4]))
 						.withCity(interner.intern(array[5]))
 						.withIsp(isp)
+						.withContinentName(interner.intern(array[2]))
+						.withStateProvCode(interner.intern(array[7]))
+						.withAsNumber(interner.intern(array[15]))
+						.withLinkType(interner.intern(array[16]))
 						.build();
 
 				if(Objects.isNull(jedisPool)) {

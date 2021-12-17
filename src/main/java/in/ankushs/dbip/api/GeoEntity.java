@@ -12,17 +12,29 @@ public final class GeoEntity {
 //	city":"Limburg Province","country":"Belgium","province":"Flanders","countryCode":"BE","isp":"Telenet"}"; line
 	@JsonProperty("city")
 	private  String city;
-	@JsonProperty("country")
+	@JsonProperty("couty")
 	private  String country;
 
-	@JsonProperty("province")
+	@JsonProperty("prvnc")
 	private  String province;
 
-	@JsonProperty("countryCode")
+	@JsonProperty("cCode")
 	private  String countryCode;
 
 	@JsonProperty("isp")
 	private  String isp;
+
+	@JsonProperty("cName")
+	private String continentName;
+
+	@JsonProperty("zCode")
+	private String stateProvCode;
+
+	@JsonProperty("aNum")
+	private String asNumber;
+
+	@JsonProperty("lType")
+	private String linkType;
 
 	public GeoEntity() {}
 
@@ -32,6 +44,11 @@ public final class GeoEntity {
 		this.province = builder.province;
 		this.countryCode = builder.countryCode;
 		this.isp = builder.isp;
+		this.continentName = builder.continentName;
+		this.stateProvCode = builder.stateProvCode;
+		this.asNumber = builder.asNumber;
+		this.linkType = builder.linkType;
+
 	}
 	 
 	public static class Builder{
@@ -40,6 +57,10 @@ public final class GeoEntity {
 		private String country;
 		private String province;
 		private String isp;
+		private String continentName;
+		private String stateProvCode;
+		private String asNumber;
+		private String linkType;
 
 
 		public Builder withIsp(final String isp){
@@ -64,6 +85,26 @@ public final class GeoEntity {
 		
 		public Builder withProvince(final String province ){
 			this.province = province;
+			return this;
+		}
+
+		public Builder withContinentName(final String continentName ){
+			this.continentName = continentName;
+			return this;
+		}
+
+		public Builder withStateProvCode(final String stateProvCode ){
+			this.stateProvCode = stateProvCode;
+			return this;
+		}
+
+		public Builder withAsNumber(final String asNumber ){
+			this.asNumber = asNumber;
+			return this;
+		}
+
+		public Builder withLinkType(final String linkType ){
+			this.linkType = linkType;
 			return this;
 		}
 		
@@ -104,6 +145,46 @@ public final class GeoEntity {
 		this.isp = isp;
 	}
 
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public String getIsp() {
+		return isp;
+	}
+
+	public String getContinentName() {
+		return continentName;
+	}
+
+	public void setContinentName(String continentName) {
+		this.continentName = continentName;
+	}
+
+	public String getStateProvCode() {
+		return stateProvCode;
+	}
+
+	public void setStateProvCode(String stateProvCode) {
+		this.stateProvCode = stateProvCode;
+	}
+
+	public String getAsNumber() {
+		return asNumber;
+	}
+
+	public void setAsNumber(String asNumber) {
+		this.asNumber = asNumber;
+	}
+
+	public String getLinkType() {
+		return linkType;
+	}
+
+	public void setLinkType(String linkType) {
+		this.linkType = linkType;
+	}
+
 	@Override
 	public String toString() {
 		return "GeoEntity{" +
@@ -112,15 +193,11 @@ public final class GeoEntity {
 				", province='" + province + '\'' +
 				", countryCode='" + countryCode + '\'' +
 				", isp='" + isp + '\'' +
+				", continentName='" + continentName + '\'' +
+				", stateProvCode='" + stateProvCode + '\'' +
+				", asNumber='" + asNumber + '\'' +
+				", linkType='" + linkType + '\'' +
 				'}';
-	}
-
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public String getIsp() {
-		return isp;
 	}
 
 	public static void main(String[] args) {

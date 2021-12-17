@@ -13,6 +13,10 @@ public final class GeoAttributesImpl implements GeoAttributes {
 	private final String isp;
 	private final InetAddress startInetAddress;
 	private final InetAddress endInetAddress;
+	private final String continentName;
+	private final String stateProvCode;
+	private final String asNumber;
+	private final String linkType;
 
 	
 	private GeoAttributesImpl(final Builder builder){
@@ -23,6 +27,11 @@ public final class GeoAttributesImpl implements GeoAttributes {
 		this.province = builder.province;
 		this.countryCode = builder.countryCode;
 		this.isp = builder.isp;
+		this.continentName = builder.continentName;
+		this.stateProvCode = builder.stateProvCode;
+		this.asNumber = builder.asNumber;
+		this.linkType = builder.linkType;
+
 	}
 	
 	public static class Builder{
@@ -33,6 +42,10 @@ public final class GeoAttributesImpl implements GeoAttributes {
 		private  String province ;
 		private  String countryCode;
 		private String isp;
+		private String continentName;
+		private String stateProvCode;
+		private String asNumber;
+		private String linkType;
 
 
 		public Builder withIsp(final String isp){
@@ -70,6 +83,26 @@ public final class GeoAttributesImpl implements GeoAttributes {
 			this.province = province;
 			return this;
 		}
+
+		public Builder withContinentName(final String continentName ){
+			this.continentName = continentName;
+			return this;
+		}
+
+		public Builder withStateProvCode(final String stateProvCode ){
+			this.stateProvCode = stateProvCode;
+			return this;
+		}
+
+		public Builder withAsNumber(final String asNumber ){
+			this.asNumber = asNumber;
+			return this;
+		}
+
+		public Builder withLinkType(final String linkType ){
+			this.linkType = linkType;
+			return this;
+		}
 		
 		public GeoAttributesImpl build(){
 			return new GeoAttributesImpl(this);
@@ -96,6 +129,10 @@ public final class GeoAttributesImpl implements GeoAttributes {
 						.withCountryCode(countryCode)
 						.withProvince(province)
 						.withIsp(isp)
+						.withContinentName(continentName)
+						.withStateProvCode(stateProvCode)
+						.withAsNumber(asNumber)
+						.withLinkType(linkType)
 						.build();
 	}
 	
