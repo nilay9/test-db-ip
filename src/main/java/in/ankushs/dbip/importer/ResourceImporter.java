@@ -96,10 +96,10 @@ public final class ResourceImporter {
 						.withProvince(interner.intern(array[4]))
 						.withCity(interner.intern(array[5]))
 						.withIsp(isp)
-						.withContinentName(interner.intern(array[2]))
-						.withStateProvCode(interner.intern(array[7]))
-						.withAsNumber(interner.intern(array[15]))
-						.withLinkType(array[16])
+						.withContinentName(array[2])
+						.withStateProvCode(array[7])
+						.withAsNumber(array[15] != null ? array[15] : "")
+						.withLinkType(array[16] != null ? array[16] : "")
 						.build();
 
 				if(Objects.isNull(jedisPool)) {

@@ -25,6 +25,7 @@ import java.util.concurrent.Executors;
 public class RedisDbIpRepositoryImpl implements DbIpRepository {
 
     private static final String SORTED_SET = "geoip";
+    private static final String UNKNOWN = "Unknown";
     private static final Logger logger = LoggerFactory.getLogger(RedisDbIpRepositoryImpl.class);
     private final JedisPool jedisPool;
     private final boolean fullLoadingEnabled;
@@ -59,10 +60,14 @@ public class RedisDbIpRepositoryImpl implements DbIpRepository {
                 final Map<String, String> result = (Map<String, String>) member.entrySet().stream().findAny().get().getValue();
                 return new GeoEntity.Builder()
                         .withCity(result.get("city"))
-                        .withCountry(result.get("country"))
+                        .withCountry(result.get("couty"))
                         .withIsp(result.get("isp"))
-                        .withCountryCode(result.get("countryCode"))
-                        .withProvince(result.get("province"))
+                        .withCountryCode(result.get("cCode"))
+                        .withProvince(result.get("prvnc"))
+                        .withContinentName(result.get("cName").equals("") ? UNKNOWN : result.get("cName"))
+                        .withStateProvCode(result.get("zCode").equals("") ? UNKNOWN : result.get("zCode"))
+                        .withAsNumber(result.get("aNum").equals("") ? UNKNOWN : result.get("aNum"))
+                        .withLinkType(result.get("lType").equals("") ? UNKNOWN : result.get("lType"))
                         .build();
             }
         }

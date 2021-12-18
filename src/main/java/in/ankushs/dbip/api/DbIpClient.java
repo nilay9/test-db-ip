@@ -143,9 +143,9 @@ public final class DbIpClient {
 		jedisPoolConfig.setMaxTotal(Runtime.getRuntime().availableProcessors());
 		jedisPoolConfig.setTimeBetweenEvictionRunsMillis(Duration.ofSeconds(30).toMillis());
 		JedisPool jedisPool = new JedisPool(jedisPoolConfig);
-		DbIpClient dbIpClient = new DbIpClient(new File("/Users/ankushsharma/Desktop/dbip-full-2018-04.csv.gz"), jedisPool, false);
+		DbIpClient dbIpClient = new DbIpClient(new File("/Users/nilay/Desktop/ip new file/new.csv.gz"), jedisPool, true);
 
-		String ip = "1.35.203.255";
+		String ip = "1.6.1.0";
 
 		System.out.println(dbIpClient.lookup(ip));
 

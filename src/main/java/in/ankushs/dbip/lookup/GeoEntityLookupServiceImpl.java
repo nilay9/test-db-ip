@@ -57,7 +57,11 @@ public final class GeoEntityLookupServiceImpl implements GeoEntityLookupService 
 								.withCountry(UNKNOWN)
 								.withCountryCode(UNKNOWN)
 								.withProvince(UNKNOWN)
-								 .withIsp(UNKNOWN)
+								.withIsp(UNKNOWN)
+								.withContinentName(UNKNOWN)
+								.withStateProvCode(UNKNOWN)
+								.withAsNumber(UNKNOWN)
+								.withLinkType(UNKNOWN)
 								.build();
 		}
 		return geoEntity;

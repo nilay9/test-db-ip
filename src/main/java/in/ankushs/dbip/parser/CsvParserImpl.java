@@ -19,12 +19,14 @@ public final class CsvParserImpl implements CsvParser {
 	@Override
 	public String[] parseRecord(final String csvRecord) {
 		PreConditions.checkEmptyString(csvRecord, "null or empty csvRecord was passed");
-		
-		return Arrays.stream(csvRecord.split(","))
+		//need to think better way to handle array index exception
+		String[] records = Arrays.stream(csvRecord.split(","))
 				.map(str ->{
 					return str.replace("\"", "").trim();
 				})
 				.toArray(String[]::new);
+		return Arrays.copyOf(records, 18);
+
 	}
 
 }
