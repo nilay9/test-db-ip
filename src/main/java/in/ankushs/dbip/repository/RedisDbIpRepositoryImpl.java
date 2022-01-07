@@ -44,33 +44,55 @@ public class RedisDbIpRepositoryImpl implements DbIpRepository {
     @Override
     public GeoEntity get(final InetAddress inetAddress) {
         PreConditions.checkNull(inetAddress, "inetAddress must not be null");
-        long ip = 0L;
+        double ip = 0L;
         if(inetAddress instanceof Inet4Address) {
             final Integer startIpNum = InetAddresses.coerceToInteger(inetAddress);
             ip = startIpNum;
+            try(final Jedis jedis = jedisPool.getResource()) {
+                final Set<String> jsons = jedis.zrangeByScore(SORTED_SET, ip, Double.MAX_VALUE, 0, 1);
+                if(jsons != null && !jsons.isEmpty()) {
+                    final Map<Object, Object> member = Json.toObject(jsons.stream().findAny().get(), Map.class);
+                    final Map<String, String> result = (Map<String, String>) member.entrySet().stream().findAny().get().getValue();
+                    return new GeoEntity.Builder()
+                            .withCity(result.get("city"))
+                            .withCountry(result.get("couty"))
+                            .withIsp(result.get("isp"))
+                            .withCountryCode(result.get("cCode"))
+                            .withProvince(result.get("prvnc"))
+                            .withContinentName(result.get("cName").equals("") ? UNKNOWN : result.get("cName"))
+                            .withStateProvCode(result.get("zCode").equals("") ? UNKNOWN : result.get("zCode"))
+                            .withAsNumber(result.get("aNum").equals("") ? UNKNOWN : result.get("aNum"))
+                            .withLinkType(result.get("lType").equals("") ? UNKNOWN : result.get("lType"))
+                            .build();
+                }
+            }
         }
         else {
             final BigInteger startIpBigInt = IPUtils.ipv6ToBigInteger(inetAddress);
-            ip = startIpBigInt.intValue();
-        }
-        try(final Jedis jedis = jedisPool.getResource()) {
-            final Set<String> jsons = jedis.zrangeByScore(SORTED_SET, ip, Double.MAX_VALUE, 0, 1);
-            if(jsons != null && !jsons.isEmpty()) {
-                final Map<Object, Object> member = Json.toObject(jsons.stream().findAny().get(), Map.class);
-                final Map<String, String> result = (Map<String, String>) member.entrySet().stream().findAny().get().getValue();
-                return new GeoEntity.Builder()
-                        .withCity(result.get("city"))
-                        .withCountry(result.get("couty"))
-                        .withIsp(result.get("isp"))
-                        .withCountryCode(result.get("cCode"))
-                        .withProvince(result.get("prvnc"))
-                        .withContinentName(result.get("cName").equals("") ? UNKNOWN : result.get("cName"))
-                        .withStateProvCode(result.get("zCode").equals("") ? UNKNOWN : result.get("zCode"))
-                        .withAsNumber(result.get("aNum").equals("") ? UNKNOWN : result.get("aNum"))
-                        .withLinkType(result.get("lType").equals("") ? UNKNOWN : result.get("lType"))
-                        .build();
+            //ip = startIpBigInt.intValue();
+            //ip = startIpBigInt;
+
+            double xip = startIpBigInt.doubleValue();
+            try(final Jedis jedis = jedisPool.getResource()) {
+                final Set<String> jsons = jedis.zrangeByScore(SORTED_SET, xip, Double.MAX_VALUE, 0, 1);
+                if(jsons != null && !jsons.isEmpty()) {
+                    final Map<Object, Object> member = Json.toObject(jsons.stream().findAny().get(), Map.class);
+                    final Map<String, String> result = (Map<String, String>) member.entrySet().stream().findAny().get().getValue();
+                    return new GeoEntity.Builder()
+                            .withCity(result.get("city"))
+                            .withCountry(result.get("couty"))
+                            .withIsp(result.get("isp"))
+                            .withCountryCode(result.get("cCode"))
+                            .withProvince(result.get("prvnc"))
+                            .withContinentName(result.get("cName").equals("") ? UNKNOWN : result.get("cName"))
+                            .withStateProvCode(result.get("zCode").equals("") ? UNKNOWN : result.get("zCode"))
+                            .withAsNumber(result.get("aNum").equals("") ? UNKNOWN : result.get("aNum"))
+                            .withLinkType(result.get("lType").equals("") ? UNKNOWN : result.get("lType"))
+                            .build();
+                }
             }
         }
+
         return null;
     }
 
@@ -83,18 +105,20 @@ public class RedisDbIpRepositoryImpl implements DbIpRepository {
         final String city = geoEntity.getCity();
         final String country = geoEntity.getCountry();
         final String province = geoEntity.getProvince();
-
+        System.out.println("city "+city);
+        System.out.println("country "+country);
+        System.out.println("province "+province);
         try {
             final UUID uuid = UUID.randomUUID();
             final Map<UUID, GeoEntity> member = Collections.singletonMap(uuid, geoEntity);
             final String json = Json.encode(member);
 
-            long ip = 0L;
+            double ip = 0L;
             if(startInetAddress instanceof Inet6Address
                     && endInetAddress instanceof Inet6Address)
             {
                 final BigInteger startIpBigInt = IPUtils.ipv6ToBigInteger(endInetAddress);
-                ip = startIpBigInt.longValue();
+                ip = startIpBigInt.doubleValue();
             }
             else if (startInetAddress instanceof Inet4Address
                     && endInetAddress instanceof Inet4Address)
@@ -105,14 +129,17 @@ public class RedisDbIpRepositoryImpl implements DbIpRepository {
 
             if(Strings.hasText(country)) {
                 countries.add(country);
+                System.out.println("Added in Country only ");
             }
 
             if(Strings.hasText(country) && Strings.hasText(province)) {
                 provinceCountries.add(new ProvinceCountry(province, country));
+                System.out.println("Added in Country + province only ");
             }
 
             if(Strings.hasText(country) && Strings.hasText(province) && Strings.hasText(city)) {
                 citiesCountryProvince.add(new CityProvinceCountry(city, province, country));
+                System.out.println("Added in Country + province + city only ");
             }
 
 

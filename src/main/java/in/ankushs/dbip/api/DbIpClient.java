@@ -143,15 +143,27 @@ public final class DbIpClient {
 		jedisPoolConfig.setMaxTotal(Runtime.getRuntime().availableProcessors());
 		jedisPoolConfig.setTimeBetweenEvictionRunsMillis(Duration.ofSeconds(30).toMillis());
 		JedisPool jedisPool = new JedisPool(jedisPoolConfig);
-		DbIpClient dbIpClient = new DbIpClient(new File("/Users/nilay/Desktop/ip new file/new.csv.gz"), jedisPool, true);
+		DbIpClient dbIpClient = new DbIpClient(new File("/Users/nilay/Downloads/xac.csv.gz"), jedisPool, true);
 
-		String ip = "1.6.1.0";
+		String ip = "5.24.229.154";
 
 		System.out.println(dbIpClient.lookup(ip));
 
-		dbIpClient.getCityProvinceCountries().forEach(it -> {
-			System.out.println(it);
-		});
+		String ip2 = "5.24.232.102";
+
+		System.out.println(dbIpClient.lookup(ip2));
+		String ip3 = "5.90.243.1";
+
+		System.out.println(dbIpClient.lookup(ip3));
+
+		String ip4 = "5.111.58.7";
+
+		System.out.println(dbIpClient.lookup(ip4));
+
+
+//		dbIpClient.getCityProvinceCountries().forEach(it -> {
+//			System.out.println(it);
+//		});
 
 //		BigDecimal d = new BigDecimal("123456789987654321123456789");
 //		String result = d.toPlainString();
