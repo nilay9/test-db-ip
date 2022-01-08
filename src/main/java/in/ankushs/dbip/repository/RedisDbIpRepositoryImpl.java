@@ -105,9 +105,7 @@ public class RedisDbIpRepositoryImpl implements DbIpRepository {
         final String city = geoEntity.getCity();
         final String country = geoEntity.getCountry();
         final String province = geoEntity.getProvince();
-        System.out.println("city "+city);
-        System.out.println("country "+country);
-        System.out.println("province "+province);
+
         try {
             final UUID uuid = UUID.randomUUID();
             final Map<UUID, GeoEntity> member = Collections.singletonMap(uuid, geoEntity);
@@ -129,17 +127,14 @@ public class RedisDbIpRepositoryImpl implements DbIpRepository {
 
             if(Strings.hasText(country)) {
                 countries.add(country);
-                System.out.println("Added in Country only ");
             }
 
             if(Strings.hasText(country) && Strings.hasText(province)) {
                 provinceCountries.add(new ProvinceCountry(province, country));
-                System.out.println("Added in Country + province only ");
             }
 
             if(Strings.hasText(country) && Strings.hasText(province) && Strings.hasText(city)) {
                 citiesCountryProvince.add(new CityProvinceCountry(city, province, country));
-                System.out.println("Added in Country + province + city only ");
             }
 
 

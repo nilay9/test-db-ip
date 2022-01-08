@@ -148,17 +148,17 @@ public final class DbIpClient {
 		String ip = "5.24.229.154";
 
 		System.out.println(dbIpClient.lookup(ip));
-
-		String ip2 = "5.24.232.102";
-
-		System.out.println(dbIpClient.lookup(ip2));
-		String ip3 = "5.90.243.1";
-
-		System.out.println(dbIpClient.lookup(ip3));
-
-		String ip4 = "5.111.58.7";
-
-		System.out.println(dbIpClient.lookup(ip4));
+//
+//		String ip2 = "5.24.232.102";
+//
+//		System.out.println(dbIpClient.lookup(ip2));
+//		String ip3 = "5.90.243.1";
+//
+//		System.out.println(dbIpClient.lookup(ip3));
+//
+//		String ip4 = "5.111.58.7";
+//
+//		System.out.println(dbIpClient.lookup(ip4));
 
 
 //		dbIpClient.getCityProvinceCountries().forEach(it -> {
